@@ -1,24 +1,20 @@
 <script>
 export default {
-    data(){
+    props: ['message'],
+    data() {
         return {
-            messages: [{ text: '', timestamp: new Date()}]
+            messages: []
         }
+    },
+    beforeUpdate() {
+        this.addMessage(this.message)
     },
     methods: {
-        addMessage(msg){
-            this.messages.push({text: msg, timestamp: new Date()})
-        },
-        textExists(str){
-            return str !== ''
+        addMessage(msg) {
+            this.messages.push({ message: msg.message, sender: msg.sender })
         }
     },
-    props: {
-        message: String
-    },
-    beforeUpdate(){
-        this.addMessage(this.message)
-    }
+
 }
 </script>
 
@@ -26,50 +22,54 @@ export default {
     <section>
         <ul ref="uolist">
             <li v-for="m of messages">
-                <span v-if="textExists(m.text)">{{ m.text }}</span>
+                <div>{{ m.sender }}: </div>
+                <span>
+                    {{ m.message }}
+                </span>
             </li>
         </ul>
     </section>
 </template>
 
 <style scoped>
-    section {
-        width: 70%;
-        background-color: #fff;
-        padding: 1rem;
-    }
-    ul{
-        list-style: none;
-        padding: 0;
-    }
+section {
+    width: 70%;
+    background-color: #fff;
+    padding: 1rem;
+}
 
-    li {
-        margin-top: 1rem;
-    }
-    
-    ul li:nth-child(odd) {  
-        text-align: left;
-    }
-    
-    li:nth-child(odd) > span {
-        background: #efefef; 
-    }
+ul {
+    list-style: none;
+    padding: 0;
+}
 
-    ul li:nth-child(even) { 
-        text-align: right;
-    }
+li {
+    margin-top: 1rem;
+}
 
-    li:nth-child(even) > span {
-        background: cornflowerblue;
-        color: #fff
-    }
+ul li:nth-child(odd) {
+    text-align: left;
+}
 
-    li > span {
-        max-width: 50%;
-        display: inline-block;
-        padding: 0.5rem;
-        text-align: left;
-        overflow-wrap: break-word;
-        border-radius: 0.5rem;
-    }
+li:nth-child(odd)>span {
+    background: #efefef;
+}
+
+ul li:nth-child(even) {
+    text-align: right;
+}
+
+li:nth-child(even)>span {
+    background: cornflowerblue;
+    color: #fff
+}
+
+li>span {
+    max-width: 50%;
+    display: inline-block;
+    padding: 0.5rem;
+    text-align: left;
+    overflow-wrap: break-word;
+    border-radius: 0.5rem;
+}
 </style>

@@ -1,17 +1,19 @@
 <script>
 export default {
-    data(){
-        return {
-            connections: [
-                { name: 'Jane Sandy', avatar: '', id: 0 },
-                { name: 'Peter Bergman', avatar: '', id: 1 },
-                { name: 'Tina Dean', avatar: '', id: 2 },
-                { name: 'Ben Franklin', avatar: '', id: 3 },
-                { name: 'Vahan Sewder', avatar: '', id: 4 },
-            ],
-            recent: [
-                { id: 0, text:'Sure. Just text me when you ready' }
-            ]
+    props: ['connections'],
+    emits: ['joinRoom', 'leaveRoom', 'getConnections'],
+    data() {
+        return {}
+    },
+    methods: {
+        joinRoom(rm) {
+            this.$emit('joinRoom', rm)
+        },
+        leaveRoom(rm) {
+            this.$emit('leaveRoom', rm)
+        },
+        getConnections() {
+            this.$emit('getConnections')
         }
     }
 }
@@ -21,65 +23,82 @@ export default {
     <section>
         <div class='header'>
             <span>Contacts</span>
+            <button @click.prevent="getConnections">Add Contacts</button>
         </div>
-        <div class='connection' v-for="c of connections" :key="c.id"> <!-- turn into component, pass down props -->
+        <div @click="joinRoom(c)" class='connection' v-for="c of connections" :key="c">
+            <!--todo: turn into component, pass down props -->
             <div class='conn-info'>
-                <span class='conn-avatar'>{{ c.avatar }}</span>
-                <span class='conn-name'>{{ c.name }}</span>
+                <span class='conn-avatar'></span>
+                <span class='conn-name'>{{ c }}</span>
             </div>
-            <p class='last-msg'>{{ recent[0].text }}</p>
+            <!-- <p class='last-msg'>{{ recent[0].text }}</p> -->
         </div>
     </section>
 </template>
 
 <style scoped>
-    section {
-        width: 30%;
-        background-color: #fff;
-        padding: 1rem 0;
-        background-color: cadetblue;
-    }
+section {
+    width: 30%;
+    background-color: #fff;
+    padding: 1rem 0;
+    background-color: cadetblue;
+}
 
-    .header {
-        text-align: center;
-        margin: 0 0 0.75rem;
-    }
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 0.75rem;
+    border-bottom: 1px solid;
+}
 
-    .header > span {
-        font-size: 1.5rem;
-    }
+.header>span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
 
-    .connection {
-        margin-top: 0.5rem;
-        padding: 0.5rem 1rem;
-        border-bottom: 1px solid;
-        background-color: #fff;
-        cursor: pointer;
-    }
+.header>button {
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
 
-    .conn-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
+.connection {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    cursor: pointer;
+}
 
-    .conn-avatar {
-        width: 1.75rem;
-        height: 1.75rem;
-        display: inline-block;
-        border-radius: 50%;
-        background-color: cornflowerblue;
-    }
+.conn-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-    .conn-name {
-        font-size: 1.25rem;
-        font-weight: 500;
-    }
+.conn-avatar {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: cornflowerblue;
+}
 
-    .last-msg {
-        font-size: 0.7rem;
-        font-style: italic;
-        padding: 0.25rem;
-        color: darkgrey;
-    }
+.conn-name {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.last-msg {
+    font-size: 0.7rem;
+    font-style: italic;
+    padding: 0.25rem;
+    color: darkgrey;
+}
 </style>
