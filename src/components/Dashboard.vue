@@ -46,7 +46,7 @@ socket.on('chatMessage', (res) => {
   <main class='dashboard-main'>
     <div class='msg-panel-wrapper'>
       <SidePanel :connections="connections" @join-room="joinRoom" @leave-room="leaveRoom"
-        @get-connections="getConnections" />
+        @get-connections="getConnections" :my-room="myRoom" />
       <Messages :message="msgData" />
     </div>
     <Input @input-submit="sendMsgToServer" :my-room="myRoom" />

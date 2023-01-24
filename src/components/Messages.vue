@@ -6,8 +6,10 @@ export default {
             messages: []
         }
     },
-    beforeUpdate() {
-        this.addMessage(this.message)
+    watch: {
+        message: function (curr) {
+            this.addMessage(curr)
+        }
     },
     methods: {
         addMessage(msg) {

@@ -1,6 +1,6 @@
 <script>
 export default {
-    props: ['connections'],
+    props: ['connections', 'myRoom'],
     emits: ['joinRoom', 'leaveRoom', 'getConnections'],
     data() {
         return {
@@ -18,13 +18,21 @@ export default {
         getConnections() {
             this.$emit('getConnections')
         }
+    },
+    watch: {
+        connections: function (curr) {
+            if (curr.length === 0)
+                window.alert('Try opening more tabs to create contacts to add...')
+        }
     }
+
 }
 </script>
 
 <template>
     <section>
         <div class='header'>
+            <div class='user'><b>User:</b> {{ myRoom }}</div>
             <span>Contacts</span>
             <button @click.prevent="getConnections">Add Contacts</button>
         </div>
@@ -47,6 +55,17 @@ section {
     background-color: cadetblue;
 }
 
+.user {
+    font-size: 0.65rem;
+    background-color: darkorange;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.user>b {
+    font-weight: bold;
+}
+
 .header {
     display: flex;
     flex-direction: column;
@@ -57,7 +76,7 @@ section {
 }
 
 .header>span {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: bold;
     margin-bottom: 0.25rem;
 }
