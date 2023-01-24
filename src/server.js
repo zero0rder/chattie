@@ -24,9 +24,9 @@ io.on('connection', (socket) => {
 
     socket.on('chatMessage', (msgObj) => {
         msgObj.recipient 
-        ? io.in(msgObj.recipient).emit('chatMessage', msgObj) //emit to a specific room, including sender 
-        : socket.broadcast.emit('chatMessage', msgObj); // all connected sockets except sender
-        // socket.to(msgObj.roomId).emit('chatMessage', msgObj); //emit to a specific room, except sender
+        ? io.in(msgObj.recipient).emit('chatMessage', msgObj)
+        : io.emit('chatMessage', msgObj);
+        // socket.to(msgObj.roomId).emit('chatMessage', msgObj); <-- similar to io.in()
     })
 
     socket.on('joinRoom', (room, cb) => {
