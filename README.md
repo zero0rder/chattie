@@ -6,6 +6,6 @@
 
 - [x] `git clone git@github.com:zero0rder/chattie.git`
 - [x] `cd chattie`
-- [x] `npm run install`
+- [x] `npm install`
 - [x] `npm run dev`
 - [x] `npm run server`
