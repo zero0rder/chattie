@@ -1,9 +1,9 @@
 <script setup>
-import { io } from 'socket.io-client';
-import { ref } from 'vue';
-import Messages from './Messages.vue';
-import SidePanel from './SidePanel.vue';
-import Input from './Input.vue';
+import { io } from 'socket.io-client'
+import { ref } from 'vue'
+import Messages from './Messages.vue'
+import SidePanel from './SidePanel.vue'
+import Input from './Input.vue'
 const socket = io('http://localhost:8080', {})
 
 let roomId = ref(),
@@ -19,8 +19,8 @@ function getConnections() {
   socket.emit('getConnections', null, res => connections.value = res.filter(c => c !== myRoom.value))
 }
 
-function sendMsgToServer({ message, sender }) {
-  socket.emit('chatMessage', { sender, message, roomId: roomId.value })
+function sendMsgToServer({ message }) {
+  socket.emit('chatMessage', { sender: myRoom.value, message, recipient: roomId.value })
 }
 
 function joinRoom(room) {
@@ -28,11 +28,7 @@ function joinRoom(room) {
 }
 
 function leaveRoom(room) {
-  socket.emit('leaveRoom', room, res => {
-    console.log(`connected clients: ${res}`)
-    roomId.value = res
-  })
-  console.log(`leave rm: ${room}`)
+  socket.emit('leaveRoom', room, res => roomId.value = res)
 }
 
 let msgData = ref()
@@ -40,7 +36,8 @@ socket.on('chatMessage', (res) => {
   msgData.value = {
     sender: res.sender,
     message: res.message,
-    roomId: roomId.value
+    recipient: res.recipient,
+    fromMe: res.sender === myRoom.value
   }
 });
 </script>
@@ -52,7 +49,7 @@ socket.on('chatMessage', (res) => {
         @get-connections="getConnections" />
       <Messages :message="msgData" />
     </div>
-    <Input @input-submit="sendMsgToServer" />
+    <Input @input-submit="sendMsgToServer" :my-room="myRoom" />
   </main>
 </template>
 

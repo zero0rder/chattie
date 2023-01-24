@@ -2,11 +2,11 @@
 export default {
   emits: ['inputSubmit'],
   data() {
-    return { sender: 'Alfred', message: '' }
+    return { message: '' }
   },
   methods: {
     submitMessage() {
-      this.$emit('inputSubmit', { message: this.message, sender: this.sender })
+      this.$emit('inputSubmit', { message: this.message })
       this.message = ''
     }
   }

@@ -11,17 +11,16 @@ export default {
     },
     methods: {
         addMessage(msg) {
-            this.messages.push({ message: msg.message, sender: msg.sender })
+            this.messages.push({ message: msg.message, sender: msg.sender, recipient: msg.recipient, fromMe: msg.fromMe })
         }
-    },
-
+    }
 }
 </script>
 
 <template>
     <section>
         <ul ref="uolist">
-            <li v-for="m of messages">
+            <li v-for="m of messages" :class="{ sent: m.fromMe, recieved: !m.fromMe }">
                 <div>{{ m.sender }}: </div>
                 <span>
                     {{ m.message }}
@@ -47,23 +46,6 @@ li {
     margin-top: 1rem;
 }
 
-ul li:nth-child(odd) {
-    text-align: left;
-}
-
-li:nth-child(odd)>span {
-    background: #efefef;
-}
-
-ul li:nth-child(even) {
-    text-align: right;
-}
-
-li:nth-child(even)>span {
-    background: cornflowerblue;
-    color: #fff
-}
-
 li>span {
     max-width: 50%;
     display: inline-block;
@@ -71,5 +53,22 @@ li>span {
     text-align: left;
     overflow-wrap: break-word;
     border-radius: 0.5rem;
+}
+
+.sent {
+    text-align: right;
+}
+
+.sent>span {
+    background: cornflowerblue;
+    color: #fff;
+}
+
+.recieved>span {
+    background: #efefef;
+}
+
+.recieved {
+    text-align: left;
 }
 </style>

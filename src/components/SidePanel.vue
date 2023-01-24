@@ -3,11 +3,14 @@ export default {
     props: ['connections'],
     emits: ['joinRoom', 'leaveRoom', 'getConnections'],
     data() {
-        return {}
+        return {
+            isActive: null
+        }
     },
     methods: {
         joinRoom(rm) {
             this.$emit('joinRoom', rm)
+            this.isActive = rm
         },
         leaveRoom(rm) {
             this.$emit('leaveRoom', rm)
@@ -25,8 +28,8 @@ export default {
             <span>Contacts</span>
             <button @click.prevent="getConnections">Add Contacts</button>
         </div>
-        <div @click="joinRoom(c)" class='connection' v-for="c of connections" :key="c">
-            <!--todo: turn into component, pass down props -->
+        <div @click="joinRoom(c)" :class="{ active: isActive === c }" class='connection' v-for="c of connections"
+            :key="c">
             <div class='conn-info'>
                 <span class='conn-avatar'></span>
                 <span class='conn-name'>{{ c }}</span>
@@ -100,5 +103,10 @@ section {
     font-style: italic;
     padding: 0.25rem;
     color: darkgrey;
+}
+
+.active {
+    background-color: darkorange;
+    color: #fff;
 }
 </style>
