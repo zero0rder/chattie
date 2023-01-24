@@ -1,21 +1,39 @@
 {
   "name": "chattie",
   "version": "0.0.1",
-  "description": "expressjs and socket.io chat app",
-  "main": "index.js",
+  "private": true,
   "type": "module",
-  "author": "Dwight Smith",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest --environment jsdom --root src/",
+    "test:e2e": "start-server-and-test preview :4173 'cypress run --e2e'",
+    "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' :4173 'cypress open --e2e'",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "server": "nodemon src/server.js"
   },
-  "license": "MIT",
   "dependencies": {
-    "cors": "^2.8.5",
+    "@socket.io/admin-ui": "^0.5.1",
     "express": "^4.18.2",
-    "socket.io": "^4.5.4"
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4",
+    "vue": "^3.2.45"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "@rushstack/eslint-patch": "^1.1.4",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/test-utils": "^2.2.6",
+    "cypress": "^12.0.2",
+    "eslint": "^8.22.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-vue": "^9.3.0",
+    "jsdom": "^20.0.3",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
+    "start-server-and-test": "^1.15.2",
+    "vite": "^4.0.0",
+    "vitest": "^0.25.6"
   }
 }
