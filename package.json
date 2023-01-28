@@ -10,13 +10,10 @@
     "test:unit": "vitest --environment jsdom --root src/",
     "test:e2e": "start-server-and-test preview :4173 'cypress run --e2e'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' :4173 'cypress open --e2e'",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "server": "nodemon src/server.js"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@socket.io/admin-ui": "^0.5.1",
-    "express": "^4.18.2",
-    "socket.io": "^4.5.4",
+    "dotenv": "^16.0.3",
     "socket.io-client": "^4.5.4",
     "vue": "^3.2.45"
   },
@@ -30,7 +27,6 @@
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-vue": "^9.3.0",
     "jsdom": "^20.0.3",
-    "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
     "start-server-and-test": "^1.15.2",
     "vite": "^4.0.0",

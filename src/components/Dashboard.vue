@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import Messages from './Messages.vue'
 import SidePanel from './SidePanel.vue'
 import Input from './Input.vue'
-const socket = io('http://localhost:8080', {})
+const socket = io(import.meta.env.VITE_SERVER_URL, {})
 
 let roomId = ref(),
   myRoom = ref(),
