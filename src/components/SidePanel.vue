@@ -32,7 +32,7 @@ export default {
 <template>
     <section>
         <div class='header'>
-            <div class='user'><b>User:</b> {{ myRoom }}</div>
+            <div class='user'><b>User:</b> {{ myRoom ?? 'loading...' }}</div>
             <span>Contacts</span>
             <button @click.prevent="getConnections">Add Contacts</button>
         </div>
